@@ -15,8 +15,16 @@ export function Form() {
   const onChangePerson = (e: ChangeEvent<HTMLSelectElement>) => {
     setPerson(e?.target?.value);
   };
+  const sendData = () => {
+    const data = { city, street, person };
+    tg?.sendData(JSON.stringify(data));
+  };
   useEffect(() => {
     tg?.MainButton?.setParams({ text: "Send data" });
+    tg?.onEvent("mainButtonClicked", sendData);
+    return () => {
+      tg?.offEvent("mainButtonClicked", sendData);
+    };
   }, []);
   useEffect(() => {
     if (city && street) {
