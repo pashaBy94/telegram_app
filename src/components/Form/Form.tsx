@@ -18,7 +18,7 @@ export function Form() {
   const sendData = useCallback(() => {
     const data = { city, street, person };
     console.log(data);
-    tg?.sendData(JSON.stringify(data));
+    tg?.sendData();
   }, [city, street, person]);
   useEffect(() => {
     tg?.onEvent("mainButtonClicked", sendData);
