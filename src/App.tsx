@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import "./App.css";
+// import "https://telegram.org/js/telegram-web-app.js";
 import { ButtonClose } from "./compnents/ButtonClose";
-
-export const tg = window.Telegram.WebApp;
+// @ts-ignore
+export const tg: any = window?.Telegram?.WebApp;
 
 function App() {
   useEffect(() => {
