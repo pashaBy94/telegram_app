@@ -1,8 +1,11 @@
-import { tg } from "../App";
+// import { tg } from "../../App";
+
+import { useTelegram } from "../../hooks/useTelegram";
 
 export function ButtonClose() {
+  const { tGclose } = useTelegram();
   function onClose() {
-    tg.close();
+    tGclose();
   }
   return (
     <button className="close_button" onClick={onClose}>

@@ -2,9 +2,20 @@ body {
   background-color: var(--tg-theme-bg-color);
   color: var(--tg-theme-text-color);
 }
-.close_button {
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: var(--tg-theme-header-bg-color);
+}
+.close_button,
+.toggle_button {
   padding: 3px 20px;
   border: none;
   border-radius: 5px;
+  background-color: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
   box-shadow: 1px 1px 5px 0px grey;
+  outline: none;
+  cursor: pointer;
 }

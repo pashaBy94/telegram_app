@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import "./App.css";
-// import "https://telegram.org/js/telegram-web-app.js";
-import { ButtonClose } from "./compnents/ButtonClose";
-// @ts-ignore
-export const tg = window.Telegram.WebApp;
+import { useTelegram } from "./hooks/useTelegram";
+import { Header } from "./components/Header/Header";
+import { Content } from "./components/Content/Content";
 
 function App() {
+  const { tGReady } = useTelegram();
   useEffect(() => {
-    tg.ready();
+    tGReady();
   }, []);
   return (
-    <>
-      Hello world
-      <ButtonClose />
-    </>
+    <div className="app">
+      <Header />
+      <Content />
+    </div>
   );
 }
 
