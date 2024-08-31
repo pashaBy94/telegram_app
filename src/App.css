@@ -1,0 +1,10 @@
+body {
+  background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+}
+.close_button {
+  padding: 3px 20px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 0px grey;
+}
