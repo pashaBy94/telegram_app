@@ -18,15 +18,16 @@ export function Form() {
   const sendData = useCallback(() => {
     const data = { city, street, person };
     console.log(data);
-
     tg?.sendData(JSON.stringify(data));
   }, [city, street, person]);
   useEffect(() => {
-    tg?.MainButton?.setParams({ text: "Send data" });
     tg?.onEvent("mainButtonClicked", sendData);
     return () => {
       tg?.offEvent("mainButtonClicked", sendData);
     };
+  }, [sendData]);
+  useEffect(() => {
+    tg?.MainButton?.setParams({ text: "Send data" });
   }, []);
   useEffect(() => {
     if (city && street) {
