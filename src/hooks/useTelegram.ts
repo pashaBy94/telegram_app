@@ -15,5 +15,6 @@ export function useTelegram() {
     tGReady: tg.ready,
     user: tg?.initDataUnsafe?.user,
     onToggleButton,
+    tg,
   };
 }
