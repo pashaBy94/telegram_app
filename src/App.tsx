@@ -3,7 +3,7 @@ import "./App.css";
 // import "https://telegram.org/js/telegram-web-app.js";
 import { ButtonClose } from "./compnents/ButtonClose";
 // @ts-ignore
-export const tg: any = window?.Telegram?.WebApp;
+export const tg = window.Telegram.WebApp;
 
 function App() {
   useEffect(() => {
