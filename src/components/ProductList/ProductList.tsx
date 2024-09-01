@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTelegram } from "../../hooks/useTelegram";
-interface ProductType {
+import ProductItem from "../ProductItem/ProductItem";
+export interface ProductType {
   id: string;
   title: string;
   price: number;
@@ -9,15 +10,7 @@ interface ProductType {
 
 export function ProductList() {
   const [addedProduct, setAddedProduct] = useState<ProductType[]>([]);
-  const { tg } = useTelegram();
-  const addProduct = (product: ProductType) => {
-    if (addedProduct.find((el) => el.id === product.id)) {
-      setAddedProduct(addedProduct.filter((el) => el.id !== product.id));
-    } else {
-      setAddedProduct((addedProduct) => addedProduct.concat(product));
-    }
-  };
-
+  const { tg, queryId } = useTelegram();
   const products = [
     {
       id: "1",
@@ -68,6 +61,32 @@ export function ProductList() {
       description: "Зеленого цвета, теплая",
     },
   ];
+
+  const addProduct = (product: ProductType) => {
+    if (addedProduct.find((el) => el.id === product.id)) {
+      setAddedProduct(addedProduct.filter((el) => el.id !== product.id));
+    } else {
+      setAddedProduct((addedProduct) => addedProduct.concat(product));
+    }
+  };
+  const sendData = useCallback(() => {
+    const data = {
+      products: addedProduct,
+      queryId,
+      totalPrice: addedProduct.reduce((acc, el) => acc + +el.price, 0),
+    };
+    fetch("http://localhost:8000", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }, [addedProduct]);
+  useEffect(() => {
+    tg.onEvent("mainButtonClicked", sendData);
+    return () => tg.offEvent("mainButtonClicked", sendData);
+  }, [sendData]);
   useEffect(() => {
     if (addedProduct.length) {
       tg?.MainButton?.show();
@@ -83,25 +102,15 @@ export function ProductList() {
       <ul className="product_list">
         {products.map((item) => {
           return (
-            <li key={item.id} className="product_item">
-              <div className="product_image"></div>
-              <div className="product_content">
-                <h3 className="product_title">{item.title}</h3>
-                <p className="product_text">{item.description}</p>
-              </div>
-              <div className="product_basket">
-                <p className="product_price">{item.price}</p>
-                <button className="add_button" onClick={() => addProduct(item)}>
-                  {addedProduct.find((el) => el.id === item.id)
-                    ? "Remove"
-                    : "Add"}
-                </button>
-              </div>
-            </li>
+            <ProductItem
+              key={item.id}
+              item={item}
+              addedProduct={addedProduct}
+              addProduct={addProduct}
+            />
           );
         })}
       </ul>
-      {/* <div>{addedProduct.reduce((acc, el) => acc + +el.price, 0)}</div> */}
     </div>
   );
 }

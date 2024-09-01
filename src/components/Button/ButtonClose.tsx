@@ -1,5 +1,3 @@
-// import { tg } from "../../App";
-
 import { useTelegram } from "../../hooks/useTelegram";
 
 export function ButtonClose() {
