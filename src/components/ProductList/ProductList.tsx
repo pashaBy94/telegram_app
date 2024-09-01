@@ -92,7 +92,9 @@ export function ProductList() {
               <div className="product_basket">
                 <p className="product_price">{item.price}</p>
                 <button className="add_button" onClick={() => addProduct(item)}>
-                  Add
+                  {addedProduct.find((el) => el.id === item.id)
+                    ? "Remove"
+                    : "Add"}
                 </button>
               </div>
             </li>
